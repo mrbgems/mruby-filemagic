@@ -1,6 +1,0 @@
-name: mruby-filemagic
-description: FileMagic class
-author: Kousuke Shimofuji
-website: https://github.com/k0u5uk3/mruby-filemagic
-protocol: git
-repository: https://github.com/k0u5uk3/mruby-filemagic.git
