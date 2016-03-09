@@ -16,8 +16,8 @@ assert("FileMagic Const") do
   assert_equal(0x000200, FileMagic::MAGIC_ERROR)
 end
 
-#assert("FileMagic File Method") do 
-#  t = FileMagic.new(FileMagic::MAGIC_NONE)
-#  puts t.file("/tmp/hoge")
-#end
+assert("FileMagic File Method") do 
+  t = FileMagic.new(FileMagic::MAGIC_NONE)
+  assert_equal("ASCII text",  t.file(__FILE__))
+end
 
