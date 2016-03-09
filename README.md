@@ -12,14 +12,16 @@ MRuby::Build.new do |conf|
 end
 ```
 ## example
+
 ```ruby
-p FileMagic.hi
-#=> "hi!!"
-t = FileMagic.new "hello"
-p t.hello
-#=> "hello"
-p t.bye
-#=> "hello bye"
+
+$ ./bin/mirb
+mirb - Embeddable Interactive Ruby Shell
+
+> filemagic = FileMagic.new(FileMagic::MAGIC_NONE)
+ => #<FileMagic:0x1f128d0>
+> filemagic.file("/etc/shadow")
+ => "regular file, no read permission"
 ```
 
 ## License
