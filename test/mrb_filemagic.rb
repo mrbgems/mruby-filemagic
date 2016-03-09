@@ -18,7 +18,7 @@ end
 
 assert("FileMagic file method test for mruby script") do 
   t = FileMagic.new(FileMagic::MAGIC_NONE)
-  assert_equal("ASCII text",  t.file(__FILE__))
+  assert_equal("HOGE ASCII text",  t.file(__FILE__))
 end
 
 assert("FileMagic file method test for binary file") do 
