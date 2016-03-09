@@ -23,7 +23,7 @@ end
 
 assert("FileMagic file method test for binary file") do 
   t = FileMagic.new(FileMagic::MAGIC_NONE)
-  assert_equal("ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=4c031db67d94dad77c4ae86b708ea73866db3ccf, not stripped", t.file(File.expand_path('../hoge', __FILE__)))
+  assert_equal("ELF 64-bit LSB executable", t.file(File.expand_path('../test_bin_file', __FILE__))[0,25])
 end
 
 
