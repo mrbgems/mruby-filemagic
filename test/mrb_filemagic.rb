@@ -32,3 +32,8 @@ assert("FileMagic buffer method test for binary file") do
   assert_equal("ELF 64-bit LSB executable", t.buffer(f.read)[0,25])
 end
 
+assert("FileMagic close method") do
+  t = FileMagic.new(FileMagic::MAGIC_NONE)
+  assert_equal(true, t.close)
+end
+

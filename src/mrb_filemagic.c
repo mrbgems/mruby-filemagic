@@ -105,6 +105,7 @@ static mrb_value mrb_filemagic_close(mrb_state *mrb, mrb_value self)
   struct magic_set *magic = NULL;
   magic = data->magic;
   magic_close(magic);
+  return mrb_true_value();
 }
 
 void mrb_mruby_filemagic_gem_init(mrb_state *mrb)
