@@ -21,7 +21,9 @@ typedef struct {
 static void filemagic_free(mrb_state *mrb, void *p)
 {
   mrb_filemagic_data *data = p;
-  magic_close(data->magic);
+  if(data->magic != NULL){
+    magic_close(data->magic);
+  }
   mrb_free(mrb, p);
 }
 
@@ -78,6 +80,14 @@ static mrb_value mrb_filemagic_file(mrb_state *mrb, mrb_value self)
   return mrb_str_new_cstr(mrb, result);
 }
 
+static mrb_value mrb_filemagic_close(mrb_state *mrb, mrb_value self)
+{
+  mrb_filemagic_data *data = DATA_PTR(self);
+  struct magic_set *magic = NULL;
+  magic = data->magic;
+  magic_close(magic);
+}
+
 void mrb_mruby_filemagic_gem_init(mrb_state *mrb)
 {
     struct RClass *filemagic;
@@ -99,6 +109,7 @@ void mrb_mruby_filemagic_gem_init(mrb_state *mrb)
     // defined methods
     mrb_define_method(mrb, filemagic, "initialize", mrb_filemagic_init, MRB_ARGS_REQ(1));
     mrb_define_method(mrb, filemagic, "file", mrb_filemagic_file, MRB_ARGS_REQ(1));
+    mrb_define_method(mrb, filemagic, "close", mrb_filemagic_close, MRB_ARGS_NONE());
     DONE;
 }
 
@@ -106,4 +117,3 @@ void mrb_mruby_filemagic_gem_final(mrb_state *mrb)
 {
 
 }
-
