@@ -84,15 +84,15 @@ static mrb_value mrb_filemagic_buffer(mrb_state *mrb, mrb_value self)
 {
   mrb_filemagic_data *data = DATA_PTR(self);
   struct magic_set *magic = NULL;
-  char *path_str;
-  int  path_len; 
+  char *buf;
+  int  buf_len;
   const char *result;
 
   magic = data->magic;
-  mrb_get_args(mrb, "s", &path_str, &path_len);
+  mrb_get_args(mrb, "s", &buf, &buf_len);
 
-  if((result = magic_buffer(magic, path_str, path_len)) == NULL){
-    mrb_raisef(mrb, E_RUNTIME_ERROR, "%S:%S", mrb_str_new_cstr(mrb, path_str), mrb_str_new_cstr(mrb, magic_error(magic)));
+  if((result = magic_buffer(magic, buf, buf_len)) == NULL){
+    mrb_raisef(mrb, E_RUNTIME_ERROR, "%S", mrb_str_new_cstr(mrb, magic_error(magic)));
   }
 
   return mrb_str_new_cstr(mrb, result);
