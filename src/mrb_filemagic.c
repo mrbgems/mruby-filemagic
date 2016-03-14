@@ -80,6 +80,25 @@ static mrb_value mrb_filemagic_file(mrb_state *mrb, mrb_value self)
   return mrb_str_new_cstr(mrb, result);
 }
 
+static mrb_value mrb_filemagic_buffer(mrb_state *mrb, mrb_value self)
+{
+  mrb_filemagic_data *data = DATA_PTR(self);
+  struct magic_set *magic = NULL;
+  char *path_str;
+  int  path_len; 
+  const char *result;
+
+  magic = data->magic;
+  mrb_get_args(mrb, "s", &path_str, &path_len);
+
+  if((result = magic_buffer(magic, path_str, path_len)) == NULL){
+    mrb_raisef(mrb, E_RUNTIME_ERROR, "%S:%S", mrb_str_new_cstr(mrb, path_str), mrb_str_new_cstr(mrb, magic_error(magic)));
+  }
+
+  return mrb_str_new_cstr(mrb, result);
+}
+
+
 static mrb_value mrb_filemagic_close(mrb_state *mrb, mrb_value self)
 {
   mrb_filemagic_data *data = DATA_PTR(self);
@@ -109,6 +128,7 @@ void mrb_mruby_filemagic_gem_init(mrb_state *mrb)
     // defined methods
     mrb_define_method(mrb, filemagic, "initialize", mrb_filemagic_init, MRB_ARGS_REQ(1));
     mrb_define_method(mrb, filemagic, "file", mrb_filemagic_file, MRB_ARGS_REQ(1));
+    mrb_define_method(mrb, filemagic, "buffer", mrb_filemagic_buffer, MRB_ARGS_REQ(1));
     mrb_define_method(mrb, filemagic, "close", mrb_filemagic_close, MRB_ARGS_NONE());
     DONE;
 }
