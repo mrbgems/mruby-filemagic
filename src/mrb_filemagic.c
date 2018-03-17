@@ -35,7 +35,7 @@ static const struct mrb_data_type mrb_filemagic_data_type = {
 static mrb_value mrb_filemagic_init(mrb_state *mrb, mrb_value self)
 {
   mrb_filemagic_data *data;
-  int flag;
+  mrb_int flag;
   struct magic_set *magic = NULL;
 
   data = (mrb_filemagic_data *)DATA_PTR(self);
@@ -68,7 +68,7 @@ static mrb_value mrb_filemagic_file(mrb_state *mrb, mrb_value self)
   mrb_filemagic_data *data = DATA_PTR(self);
   struct magic_set *magic = NULL;
   char *path_str;
-  int  path_len; 
+  mrb_int  path_len; 
   const char *result;
 
   magic = data->magic;
@@ -86,7 +86,7 @@ static mrb_value mrb_filemagic_buffer(mrb_state *mrb, mrb_value self)
   mrb_filemagic_data *data = DATA_PTR(self);
   struct magic_set *magic = NULL;
   char *buf;
-  int  buf_len;
+  mrb_int  buf_len;
   const char *result;
 
   magic = data->magic;
