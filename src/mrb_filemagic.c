@@ -7,6 +7,7 @@
 */
 
 #include "mruby.h"
+#include "mruby/class.h"
 #include "mruby/data.h"
 #include "mrb_filemagic.h"
 #include <string.h>
@@ -21,7 +22,7 @@ typedef struct {
 static void filemagic_free(mrb_state *mrb, void *p)
 {
   mrb_filemagic_data *data = p;
-  if(data->magic != NULL){
+  if(data && data->magic){
     magic_close(data->magic);
   }
   mrb_free(mrb, p);
@@ -105,6 +106,7 @@ static mrb_value mrb_filemagic_close(mrb_state *mrb, mrb_value self)
   struct magic_set *magic = NULL;
   magic = data->magic;
   magic_close(magic);
+  data->magic = NULL;
   return mrb_true_value();
 }
 
@@ -112,6 +114,7 @@ void mrb_mruby_filemagic_gem_init(mrb_state *mrb)
 {
     struct RClass *filemagic;
     filemagic = mrb_define_class(mrb, "FileMagic", mrb->object_class);
+    MRB_SET_INSTANCE_TT(filemagic, MRB_TT_DATA);
 
     // defined constants
     mrb_define_const(mrb, filemagic, "MAGIC_NONE", mrb_fixnum_value(MAGIC_NONE));
