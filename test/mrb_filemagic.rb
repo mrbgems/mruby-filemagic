@@ -23,13 +23,13 @@ end
 
 assert("FileMagic file method test for binary file") do 
   t = FileMagic.new(FileMagic::MAGIC_NONE)
-  assert_equal("ELF 64-bit LSB executable", t.file(File.expand_path('../test_bin_file', __FILE__))[0,25])
+  assert_include(t.file(File.expand_path('../test_bin_file', __FILE__)), "ELF 64-bit LSB")
 end
 
 assert("FileMagic buffer method test for binary file") do
   t = FileMagic.new(FileMagic::MAGIC_NONE)
   f = open(File.expand_path('../test_bin_file', __FILE__))
-  assert_equal("ELF 64-bit LSB executable", t.buffer(f.read)[0,25])
+  assert_include(t.buffer(f.read), "ELF 64-bit LSB")
 end
 
 assert("FileMagic close method") do
